@@ -5,7 +5,9 @@ var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
-var catchPhrases = ['Why I oughta...', 'Nyuk Nyuk Nyuk!', 'Poifect!', 'Spread out!', 'Say a few syllables!', 'Soitenly'];
+var stoogePhrase = require('./stoogePhrase');
+
+var catchPhrases = stoogePhrase.catchPhrases();
 
 app.set('view engine', 'pug');
 app.set('view options', {
@@ -16,17 +18,6 @@ app.set('views', __dirname + '/views');
 app.get('/stooges/chat', function(req, res, next) {
 	res.render('chat');
 });
-
-var socket = io.connet('http://localhost:8005');
-socket.on('chat', function(data) {
-	document.getElementById('chat').innerHTML = '<p><b>' + data.title + '</b>: ' + data.contents + '</p>';
-});
-var submitChat = function(form) {
-	socket.emit('chat', {
-		text: form.chat.value
-	});
-	return false;
-};
 
 io.sockets.on('connection', function(socket) {
 	var sendChat = function(title, text) {
