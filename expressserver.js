@@ -17,7 +17,9 @@ app.get('/stooges/:name?', function(req, res, next) {
 		case 'curly':
 		case 'moe':
 			// res.send(name + ' is my favorite stooge.');
-			res.render('stooges',{stooge:name});
+			res.render('stooges', {
+				stooge: name
+			});
 			break;
 
 		default:
@@ -27,7 +29,9 @@ app.get('/stooges/:name?', function(req, res, next) {
 
 app.get('/stooges/*?', function(req, res) {
 	// res.send('no stooges listed');
-	res.render('stooges',{stooge:null});
+	res.render('stooges', {
+		stooge: null
+	});
 });
 
 app.get('/?', function(req, res) {
